@@ -12,6 +12,8 @@ const DUMMY_CLIENT = {
 
 };
 
+let LOG =  () => 1; console.log;
+
 class Pizzabot {
 
   constructor(client = DUMMY_CLIENT) {
@@ -22,19 +24,14 @@ class Pizzabot {
 
   onPizzaChannelMessage(msg) {
 
-
-
     try {
-      if (this.filterMessages(msg)) {
-        console.log("filtered message");
-      } else if (this.detectOrder(msg)) {
-        console.log(`detectOrder`);
-      } else if (this.detectListOrders(msg)) {
-        console.log(`listOrders`);
-      }
+      chain(msg,this)
+        .filter(this.filterMessages)
+        .consume(this.detectOrder)
+        .consume(this.detectListOrders);
 
     } catch (e) {
-      console.log(e);
+      LOG(e);
     }
   }
 
@@ -55,12 +52,12 @@ class Pizzabot {
 
   filterMessages(msg) {
     if (msg.subtype === 'bot_message') {
-      return true; //filter out
+      return false; //filter out
     } else if (msg.type === "message") {
       this.ts = msg.ts;
-      return false;
+      return true;
     } else {
-      return false;
+      return true;
     }
   }
 
@@ -78,7 +75,7 @@ class Pizzabot {
 
   detectOrder(msg) {
     if (pizzalist.hasPizza(msg.text, order => this.processOrder(order, msg))) {
-      console.log(`processedOrder`);
+      LOG(`processedOrder`);
       return true;
     } else {
       return false;

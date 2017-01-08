@@ -1,12 +1,13 @@
 class Chain {
 
-  constructor(message) {
+  constructor(message, caller) {
     this.message = message;
-    this.parent = this;
+    this.caller = caller ? caller : this;
   }
 
   _cb(f, success, fail) {
-    if (f(this.message)) {
+
+    if (f.call(this.caller,this.message)) {
       return success;
     } else {
       return fail;
@@ -22,7 +23,7 @@ class Chain {
   }
 
   map(f) {
-    return new Chain(f(this.message));
+    return new Chain(f.call(this.caller,this.message));
   }
 
   process(f) {
@@ -61,5 +62,5 @@ class BlockedChain {
 }
 
 module.exports = {
-  chain: (m) => new Chain(m)
+  chain: (m,c) => new Chain(m,c)
 }
