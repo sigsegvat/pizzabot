@@ -1,4 +1,5 @@
 let pizzalist = require("./pizza-detector");
+let chain = require("./filter-chain").chain;
 
 const DUMMY_CLIENT = {
   chat: {
@@ -21,6 +22,8 @@ class Pizzabot {
 
   onPizzaChannelMessage(msg) {
 
+
+
     try {
       if (this.filterMessages(msg)) {
         console.log("filtered message");
@@ -29,6 +32,7 @@ class Pizzabot {
       } else if (this.detectListOrders(msg)) {
         console.log(`listOrders`);
       }
+
     } catch (e) {
       console.log(e);
     }
@@ -99,6 +103,9 @@ class Pizzabot {
     for(let [pizza,users] of this.orders) {
       if(users.has(user)) {
         users.delete(user);
+        if(users.size == 0) {
+          this.orders.delete(pizza);
+        }
       }
     }
   }

@@ -56,12 +56,13 @@ describe('pizzabot', function() {
     });
 
     it('should answer order lists', function() {
-      let msg = { type: 'message',
-         user: 'U06MSLT7H',
-         text: 'orders',
+      let msg = {
+        type: 'message',
+        user: 'U06MSLT7H',
+        text: 'orders',
         channel: 'test',
-         ts: '1481538257.000036',
-         };
+        ts: '1481538257.000036',
+      };
       let answer = [];
       let bot2 = new Pizzabot({
         reactions: {
@@ -76,8 +77,9 @@ describe('pizzabot', function() {
       });
       pizzatest4.reverse().forEach(i => bot2.onPizzaChannelMessage(i));
       bot2.onPizzaChannelMessage(msg);
-      console.log(answer);
-      answer.should.containEql([ 'test', '2x Provinciale (<@U06QLURC1> <@U07BCV4AE>)' ]);
+
+      answer.should.containEql(['test', '2x Provinciale (<@U06QLURC1> <@U07BCV4AE>)']);
+      answer.should.not.matchAny(([test, pizza]) => pizza.should.match(/Diavolo/));
     });
 
 

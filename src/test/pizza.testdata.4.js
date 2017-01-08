@@ -27,7 +27,7 @@ module.exports =  [
        reactions: [Object] },
      { type: 'message', channel: 'test',
        user: 'U06P2GUBX',
-       text: 'bitte sehr: <http://www.salumisantorso.it/wp-content/uploads/napolimeta.jpg>',
+       text: 'bitte sehr: sanremo',
        attachments: [Object],
        ts: '1481536694.000031',
        reactions: [Object] },
