@@ -7,10 +7,9 @@ let bot_token = process.env.slack_bot_token;
 let rtm = new slack.RtmClient(bot_token);
 let web = new slack.WebClient(bot_token);
 
-let pizzabot;
+let pizzabot = new bot.Pizzabot(web);
 
 rtm.on(slack.CLIENT_EVENTS.RTM.AUTHENTICATED, (rtmStartData) => {
-  pizzabot = new bot.Pizzabot(web);
   console.log(`Logged in as ${rtmStartData.self.name}`);
 });
 

@@ -5,8 +5,7 @@ class Chain {
     this.caller = caller ? caller : this;
   }
 
-  _cb(f, success, fail) {
-
+  _build(f, success, fail) {
     if (f.call(this.caller,this.message)) {
       return success;
     } else {
@@ -19,42 +18,28 @@ class Chain {
   }
 
   filter(f) {
-    return this._cb(f, this, block(this));
-  }
-
-  map(f) {
-    return new Chain(f.call(this.caller,this.message));
+    return this._build(f, this, block(this));
   }
 
   process(f) {
-    return this._cb(f, this, this);
+    this.message =   f.call(this.caller, this.message);
+    return this;
   }
 
   consume(f) {
-    return this._cb(f, block(), this);
+    return this._build(f, block(), this);
   }
 
 }
 
 let block = (parent) => new BlockedChain(parent);
 
-
 class BlockedChain {
   constructor(parent){
     this.parent = parent;
-  }
-
-  filter() {
-    return this;
-  }
-  process() {
-    return this;
-  }
-  consume() {
-    return this;
-  }
-  map() {
-    return this;
+    this.filter = () => this;
+    this.consume = () => this;
+    this.process = () => this;
   }
   end() {
     return this.parent? this.parent : this;

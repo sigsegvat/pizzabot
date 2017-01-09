@@ -51,9 +51,10 @@ describe('filter-chain', function() {
       })
       .filter((m) => m.text == "hello")
       .consume((m) => false)
-      .map((m) => "juhu")
+      .process((m) => "juhu")
       .process((m) => {
         called = true;
+        return m;
       })
       .consume((m) => {
         msg = m;

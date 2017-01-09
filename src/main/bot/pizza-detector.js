@@ -16,7 +16,7 @@
 { name:"Casalinga", regex:"Casalinga", ingredients: "Tomaten, Käse, Schinken, Champignons, Artischocken und Spiegelei (AGP)"},
 { name:"Quattro Stagioni", regex:"Quattro Stagioni", ingredients: "Tomaten, Käse, Champignons, Schinken und Artischocken (AGP)"},
 { name:"Calzone", regex:"Calzone", ingredients: "Tomaten, Käse, Schinken, Champignons und Artischocken (AGPL)"},
-{ name:"Flaker", regex:"Flaker", ingredients: "Tomaten, Käse, Speck, Pfefferoni und Spiegelei (AGP)"},
+{ name:"Fiaker", regex:"Fiaker", ingredients: "Tomaten, Käse, Speck, Pfefferoni und Spiegelei (AGP)"},
 { name:"Mamamia", regex:"Mamm?a\ ?mia", ingredients: "Tomaten, Käse, Schafkäse, Ei und Zwiebeln (AGP)"},
 { name:"Capricciosa", regex:"Cap+ricc?iosa", ingredients: "Tomaten, Käse, Schinken, Champignons, Artischocken, Oliven und Sardellen (AGDP)"},
 { name:"Diavolo", regex:"Dia[v|b]olo", ingredients: "Tomaten, Käse, Schinken und Pfefferoni (AGPL)"},

@@ -27,8 +27,8 @@ class Pizzabot {
     try {
       chain(msg,this)
         .filter(this.filterMessages)
-        .consume(this.detectOrder)
-        .consume(this.detectListOrders);
+          .consume(this.detectOrder)
+          .consume(this.detectListOrders);
 
     } catch (e) {
       LOG(e);
