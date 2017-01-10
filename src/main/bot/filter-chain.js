@@ -17,7 +17,7 @@ class Chain {
     return this;
   }
 
-  filter(f) {
+  when(f) {
     return this._build(f, this, block(this));
   }
 
@@ -27,7 +27,8 @@ class Chain {
   }
 
   consume(f) {
-    return this._build(f, block(), this);
+    f.call(this.caller,this.message)
+    return this;
   }
 
 }
@@ -37,7 +38,7 @@ let block = (parent) => new BlockedChain(parent);
 class BlockedChain {
   constructor(parent){
     this.parent = parent;
-    this.filter = () => this;
+    this.when = () => this;
     this.consume = () => this;
     this.process = () => this;
   }

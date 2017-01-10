@@ -30,6 +30,13 @@
 { name:"Al Frutti Di Mare", regex:"(Al )?Frutti (Di )?Mare", ingredients: "Tomaten, Käse, Muscheln, Schrimps, Calamari, Thunfisch und Knoblauch (AGPLRD)"}
 ];
 
+let detectPizza = (text) => {
+    let found = pizzalist.find( p => {
+        return text.toLowerCase().search(p.regex.toLowerCase()) != -1;
+    });
+    return found != undefined;
+}
+
 let hasPizza = (sencentce, cb) => {
 
     let found = pizzalist.find( p => {
@@ -47,5 +54,6 @@ let hasPizza = (sencentce, cb) => {
 };
 
 module.exports = {
-    hasPizza : hasPizza
+    hasPizza : hasPizza,
+    detectPizza : detectPizza
 };

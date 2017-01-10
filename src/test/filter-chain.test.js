@@ -7,7 +7,7 @@ describe('filter-chain', function() {
     chain({
         text: "hello"
       })
-      .filter((m) => true)
+      .when((m) => true)
       .process((m) => {
         called = true
       });
@@ -20,7 +20,7 @@ describe('filter-chain', function() {
     chain({
         text: "hello"
       })
-      .filter((m) => m.text)
+      .when((m) => m.text)
       .consume((m) => false)
       .process((m) => {
         called = true
@@ -29,19 +29,7 @@ describe('filter-chain', function() {
     should(called).equal(true);
   });
 
-  it('should exec', function() {
-    let called = false;
-    chain({
-        text: "hello"
-      })
-      .filter((m) => m.text)
-      .consume((m) => true)
-      .process((m) => {
-        called = true
-      });
 
-    should(called).equal(false);
-  });
 
   it('should map', function() {
     let called = false;
@@ -49,7 +37,7 @@ describe('filter-chain', function() {
     chain({
         text: "hello"
       })
-      .filter((m) => m.text == "hello")
+      .when((m) => m.text == "hello")
       .consume((m) => false)
       .process((m) => "juhu")
       .process((m) => {
@@ -61,29 +49,28 @@ describe('filter-chain', function() {
         return true;
       })
       .process((m) => {
-        called = false;
         msg = "XXX";
       });
 
     should(called).equal(true);
-    msg.should.equal("juhu");
+    msg.should.equal("XXX");
   });
 
   it('should have a choice', function() {
     let called = false;
 
     chain("hello")
-      .filter((m) => m == "hello")
+      .when((m) => m == "hello")
         .consume((m) => {
           called = true;
         })
-        .filter(() => false)
+        .when(() => false)
           .consume((m) => {
             throw new Error("");
           })
         .end()
       .end()
-      .filter((m) => m != "hello")
+      .when((m) => m != "hello")
       .consume((m) => {
         throw new Error("");
       })

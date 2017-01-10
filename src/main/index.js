@@ -1,3 +1,4 @@
+"use strict";
 let slack = require('@slack/client');
 let bot = require('./bot/pizzabot');
 require('dotenv').config();
