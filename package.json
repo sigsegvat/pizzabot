@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/main/index.js",
-    "test": "mocha src/test"
+
+    "start": "node build/index.js",
+    "test": "mocha src/test",
+    "build": "webpack"
   },
   "author": "",
   "license": "ISC",
