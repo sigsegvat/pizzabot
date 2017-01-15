@@ -1,3 +1,4 @@
+"use strict";
 let pizzalist = require("./pizza-detector");
 let chain = require("./filter-chain").chain;
 
@@ -30,13 +31,24 @@ class Pizzabot {
             .consume(this.addOrder)
           .end()
           .when((msg) => msg.text === "orders")
-            .consume(this.displayOrders);
-          end()
+            .consume(this.displayOrders)
+          .end()
+          .when(this.isAdmin)
+            .when((msg) => msg.text === "clear")
+              .consume(() => this.orders = new Map())
+            .end()
+            .when((msg) => msg.startsWith("add"))
+              .consume()
+          .end()
         .end();
     } catch (e) {
       LOG(e);
     }
   }
+
+ isAdmin(msg) {
+   return msg.user === "U04F3P9QJ";
+ }
 
   noBotMessages(msg) {
     

@@ -29,6 +29,13 @@ describe('pizzabot', function() {
       bot.orders.get("Toscana").should.have.size(2);
     });
 
+
+    it('should clear orders', function() {
+      pizzatest2.reverse().forEach(i => bot.onPizzaChannelMessage(i));
+      bot.onPizzaChannelMessage({ text : "clear", user : "U04F3P9QJ"});
+      bot.orders.should.be.empty();
+    });
+
     it('should know day changes', function() {
       pizzatest1.reverse().forEach(i => bot.onPizzaChannelMessage(i));
       bot.orders.should.not.have.key("Diavolo");
