@@ -4,8 +4,6 @@
      x[d] = `commonjs ${d}`;
  }
 
- console.log(x);
-
 module.exports = {
   entry: './src/main/index.js',
   target: 'node',
