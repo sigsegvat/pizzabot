@@ -12,7 +12,7 @@
     "build": "webpack",
     "postbuild": "cp package.json target && npm install --production --prefix target/",
 
-    "predeploy": "tar -cvzf deploy.tar.gz ./target",
+    "predeploy": "npm run build && tar -cvzf deploy.tar.gz ./target",
     "deploy":"scp -i deployscp deploy.tar.gz $DEPLOY_PATH"
   },
   "author": "",
