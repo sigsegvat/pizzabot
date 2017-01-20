@@ -1,4 +1,7 @@
 node_modules/
 *.env
-build/
 .vscode/
+target/
+build/
+.deployscp
+.DS_Store

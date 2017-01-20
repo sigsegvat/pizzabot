@@ -7,7 +7,13 @@
 
     "start": "node build/index.js",
     "test": "mocha src/test",
-    "build": "webpack"
+
+    "prebuild": "rm -rf target/ && rm deploy.tar.gz && mkdir target/",
+    "build": "webpack",
+    "postbuild": "cp package.json target && npm install --production --prefix target/",
+
+    "predeploy": "tar -cvzf deploy.tar.gz ./target",
+    "deploy":"scp -i deployscp deploy.tar.gz $DEPLOY_PATH"
   },
   "author": "",
   "license": "ISC",

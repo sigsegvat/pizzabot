@@ -8,7 +8,7 @@ module.exports = {
   entry: './src/main/index.js',
   target: 'node',
   output: {
-    path:  'build',
+    path:  'target',
     filename: 'index.js'
   },
   externals : x
