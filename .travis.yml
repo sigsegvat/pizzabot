@@ -15,4 +15,4 @@ deploy:
   on:
     branch: master
 addons:
-  ssh_known_hosts: $DEPLOY_HOST
+  ssh_known_hosts: 212.47.241.242
