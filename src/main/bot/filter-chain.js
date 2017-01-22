@@ -38,7 +38,7 @@ let block = (parent) => new BlockedChain(parent);
 class BlockedChain {
   constructor(parent){
     this.parent = parent;
-    this.when = () => this;
+    this.when = () => block(this);
     this.consume = () => this;
     this.process = () => this;
   }

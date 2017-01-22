@@ -1,3 +1,4 @@
+"use strict";
 let chain = require("../main/bot/filter-chain.js").chain;
 let should = require('should');
 
@@ -75,6 +76,26 @@ describe('filter-chain', function() {
 
 
     should(called).equal(true);
+
+  });
+
+  it('should execute double when', function() {
+
+
+    chain("hello")
+      .when(() => false)
+        .when(() => true)
+          .consume((m) => {
+            throw new Error("");
+          })
+        .end()
+        .when(() => true)
+          .consume((m) => {
+            throw new Error("");
+          })
+        .end()
+      .end()
+
 
   });
 
