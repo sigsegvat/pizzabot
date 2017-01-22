@@ -27,22 +27,38 @@ class Pizzabot {
     try {
       chain(msg,this)
         .when(this.noBotMessages)
+          .when(this.isAdmin)
+            .when((msg) => msg.text === "clear")
+              .consume(() => this.orders = new Map())
+            .end()
+            .when((msg) =>  pizzalist.detectPizza(msg.text) && this.detectUser(msg.text))
+              .consume((m) => this.addOrderFor(msg))
+            .end()
+          .end()
           .when((msg) => pizzalist.detectPizza(msg.text))
             .consume(this.addOrder)
           .end()
           .when((msg) => msg.text === "orders")
             .consume(this.displayOrders)
           .end()
-          .when(this.isAdmin)
-            .when((msg) => msg.text === "clear")
-              .consume(() => this.orders = new Map())
-            .end()
-            .when((msg) => msg.startsWith("add"))
-              .consume()
-          .end()
         .end();
     } catch (e) {
       LOG(e);
+    }
+  }
+
+  detectUser(text) {
+    return text.search("<@([A-Z0-9]+)(|[^>]*)?>") != -1;
+  }
+
+  addOrderFor(msg) {
+    let user = msg.text.match("<@([A-Z0-9]+)(|[^>]*)?>")[1];
+    console.log(user);
+    if (pizzalist.hasPizza(msg.text, order => this.processOrderFor(order, msg, user))) {
+      LOG(`processedOrder`);
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -70,7 +86,7 @@ class Pizzabot {
   }
 
   addOrder(msg) {
-    if (pizzalist.hasPizza(msg.text, order => this.processOrder(order, msg))) {
+    if (pizzalist.hasPizza(msg.text, order => this.processOrderFor(order, msg, msg.user))) {
       LOG(`processedOrder`);
       return true;
     } else {
@@ -78,8 +94,7 @@ class Pizzabot {
     }
   }
 
-  processOrder(order, msg) {
-    let user = msg.user;
+  processOrderFor(order, msg, user) {
     this.removeDuplicateUserInOrders(user);
     if (!this.orders.has(order.name)) {
       this.orders.set(order.name, new Set([user]));

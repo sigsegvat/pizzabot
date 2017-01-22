@@ -26,7 +26,7 @@ describe('filter-chain', function() {
         called = true
       });
 
-    should(called).equal(true);
+    should(called).equal(false);
   });
 
 
@@ -38,22 +38,20 @@ describe('filter-chain', function() {
         text: "hello"
       })
       .when((m) => m.text == "hello")
-      .consume((m) => false)
       .process((m) => "juhu")
       .process((m) => {
         called = true;
         return m;
       })
       .consume((m) => {
-        msg = m;
-        return true;
+        msg = "XXX1";
       })
       .process((m) => {
-        msg = "XXX";
+        msg = "YYY";
       });
 
     should(called).equal(true);
-    msg.should.equal("XXX");
+    msg.should.equal("XXX1");
   });
 
   it('should have a choice', function() {

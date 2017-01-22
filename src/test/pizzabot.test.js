@@ -4,6 +4,7 @@ var pizzatest1 = require("./pizza.testdata.1");
 var pizzatest2 = require("./pizza.testdata.2");
 var pizzatest3 = require("./pizza.testdata.3");
 var pizzatest4 = require("./pizza.testdata.4");
+var pizzatest5 = require("./pizza.testdata.5");
 
 describe('pizzabot', function() {
   describe('#onPizzaChannelMessage()', function() {
@@ -34,13 +35,6 @@ describe('pizzabot', function() {
       pizzatest2.reverse().forEach(i => bot.onPizzaChannelMessage(i));
       bot.onPizzaChannelMessage({ text : "clear", user : "U04F3P9QJ"});
       bot.orders.should.be.empty();
-    });
-
-    it('should know day changes', function() {
-      pizzatest1.reverse().forEach(i => bot.onPizzaChannelMessage(i));
-      bot.orders.should.not.have.key("Diavolo");
-      pizzatest2.reverse().forEach(i => bot.onPizzaChannelMessage(i));
-      bot.orders.should.have.key("Diavolo");
     });
 
     it('should filter messages from bots', function() {
@@ -88,6 +82,21 @@ describe('pizzabot', function() {
       answer.should.containEql(['test', '2x Provinciale (<@U06QLURC1> <@U07BCV4AE>)']);
       answer.should.not.matchAny(([test, pizza]) => pizza.should.match(/Diavolo/));
     });
+
+     it('should detect users', function() {
+        bot.detectUser("blubb").should.be.false();
+        bot.detectUser("magaritha für <@TEST>").should.be.true();
+        bot.detectUser("<@U0MHZ3ARM|gabor.liptak> will pizza").should.be.true();
+     });
+
+
+     it('add orders for others', function() {
+       pizzatest5.reverse().forEach(i => bot.onPizzaChannelMessage(i));
+       bot.orders.should.have.key("Provinciale");
+      bot.orders.should.have.key("Toscana");
+      bot.orders.get("Toscana").should.have.key('U15AX2X9P');
+
+     });
 
 
   });

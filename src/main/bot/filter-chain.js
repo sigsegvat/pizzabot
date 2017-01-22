@@ -28,7 +28,7 @@ class Chain {
 
   consume(f) {
     f.call(this.caller,this.message)
-    return this;
+    return block();
   }
 
 }
