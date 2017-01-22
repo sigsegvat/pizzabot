@@ -20,7 +20,7 @@
     "modules": "npm install --production --prefix target/slackbot",
 
     "prepackage": "npm run build",
-    "package": "cp .env target/slackbot/ && tar -cvzf target/slackbot.tar.gz ./target/slackbot",
+    "package": "cp .env target/slackbot/ && cd target/ && tar -cvzf slackbot.tar.gz ./slackbot",
     "postpackage":"rm -rf target/slackbot"
 
   },
