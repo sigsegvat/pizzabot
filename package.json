@@ -4,13 +4,24 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node build/index.js",
+
+    "prestart": "npm build",
+    "start": "node target/index.js",
+
     "test": "mocha src/test",
-    "prebuild": "rm -rf target/  && mkdir target/",
-    "build": "webpack",
-    "postbuild": "cp package.json target && npm install --production --prefix target/",
-    "predeploy": "npm run build && tar -cvzf deploy.tar.gz ./target",
-    "deploy": "scp -i .deployscp deploy.tar.gz $DEPLOY_PATH"
+
+    "prebuild": "rm -rf target/  && mkdir -p target/slackbot",
+
+    "build": "npm run webpack && npm run modules",
+
+    "webpack": "webpack",
+
+    "premodules": "cp package.json target/slackbot",
+    "modules": "npm install --production --prefix target/slackbot",
+
+    "prepackage": "npm run build",
+    "package": "cp .env target/slackbot/ && tar -cvzf target/slackbot.tar.gz ./target/slackbot"
+
   },
   "author": "",
   "license": "ISC",
