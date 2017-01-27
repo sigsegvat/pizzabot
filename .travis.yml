@@ -9,8 +9,10 @@ node_js:
 before_deploy:
 - npm run package
 deploy:
+  provider: script
   skip_cleanup: true
-  script: docker build .
+  script: 
+    - docker build .
   on:
     branch: master
   
