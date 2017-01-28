@@ -13,4 +13,9 @@ phases:
       - npm test
   post_build:
     commands:
-      - ls
+      - ls -la
+      - npm run package
+artifacts:
+  files:
+    - target/slackbot.tar.gz
+  discard-paths: yes
