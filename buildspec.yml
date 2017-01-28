@@ -11,6 +11,7 @@ phases:
   build:
     commands:
       - npm test
+      - npm run package
   post_build:
     commands:
-      - npm package
+      - find
