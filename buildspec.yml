@@ -4,8 +4,7 @@ phases:
   install:
     commands:
       - echo Installing ...
-      - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
-      - nvm install 6.9
+      - ./build/install.sh
   pre_build:
     commands:
       - echo Installing source NPM dependencies...
