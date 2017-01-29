@@ -13,7 +13,7 @@ phases:
       - npm test
   post_build:
     commands:
-      - wget $ENV_FILE
+      - aws s3 cp $ENV_FILE .env
       - npm run package
 artifacts:
   files:
