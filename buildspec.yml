@@ -3,16 +3,10 @@ version: 0.1
 phases:
   pre_build:
     commands:
-      - echo Installing source NPM dependencies...
-      - npm install
+      - docker-machine
   build:
     commands:
-      - npm test
+      - docker build .
   post_build:
     commands:
-      - aws s3 cp $ENV_FILE .env
-      - npm run package
-artifacts:
-  files:
-    - target/slackbot.tar.gz
-  discard-paths: yes
+      - ls

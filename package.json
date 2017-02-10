@@ -6,13 +6,13 @@
   "scripts": {
 
     "prestart": "npm build",
-    "start": "node target/index.js",
+    "start": "node target/slackbot/index.js",
 
     "test": "mocha src/test",
 
     "prebuild": "rm -rf target/  && mkdir -p target/slackbot",
 
-    "build": "npm run webpack && npm run modules",
+    "build": "npm run webpack",
 
     "webpack": "webpack",
 

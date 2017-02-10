@@ -1,6 +1,7 @@
 FROM node:6.9
-WORKDIR /app/
-ADD target/ .
-RUN tar -xzf slackbot.tar.gz
-WORKDIR /app/slackbot
-CMD node index.js
+ADD package.json .
+RUN npm install
+ADD webpack.config.js .
+ADD src/ .
+RUN npm run build
+CMD node target/slackbot/index.js
