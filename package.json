@@ -11,17 +11,9 @@
     "test": "mocha src/test",
 
     "prebuild": "rm -rf target/  && mkdir -p target/slackbot",
-
     "build": "npm run webpack",
 
-    "webpack": "webpack",
-
-    "premodules": "cp package.json target/slackbot",
-    "modules": "npm install --production --prefix target/slackbot",
-
-    "prepackage": "npm run build",
-    "package": "cp .env target/slackbot/ && cd target/ && tar -cvzf slackbot.tar.gz ./slackbot",
-    "postpackage":"rm -rf target/slackbot"
+    "webpack": "webpack"
 
   },
   "author": "",

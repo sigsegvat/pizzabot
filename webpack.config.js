@@ -8,7 +8,7 @@ module.exports = {
   entry: './src/main/index.js',
   target: 'node',
   output: {
-    filename: 'index.js'
+    filename: 'target/slackbot/index.js'
   },
   externals : x
 }
