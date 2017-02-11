@@ -13,8 +13,6 @@ phases:
       - docker tag $IMAGE_REPO_NAME:latest $IMAGE_REPO_URI/$IMAGE_REPO_NAME:$IMAGE_TAG  
   post_build:
     commands:
-       post_build:
-    commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
       - docker push $IMAGE_REPO_URI/$IMAGE_REPO_NAME:$IMAGE_TAG
