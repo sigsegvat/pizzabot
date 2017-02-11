@@ -18,20 +18,4 @@ rtm.on(slack.RTM_EVENTS.MESSAGE, (msg) => {
   pizzabot.onPizzaChannelMessage(msg);
 });
 
-/**
-
-web.users.info(msg.user, (err, user) => {
-  rtm.sendMessage("hello @" + user.user.name, msg.channel);
-});
-
-web.channels.info('C2T8SCZ44', (err, list) => {
-  //console.log(list);
-});
-
-web.channels.history('C2T8SCZ44', {
-  latest: 1482145125
-}, (err, list) => {
-  //console.log(list);
-});
-**/
 rtm.start();
