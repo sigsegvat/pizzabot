@@ -3,10 +3,18 @@ version: 0.1
 phases:
   pre_build:
     commands:
-      - docker version
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login --region eu-west-1)
   build:
     commands:
-      - docker build .
+      - echo Build started on `date`
+      - echo Building the Docker image...          
+      - docker build -t $IMAGE_REPO_NAME .
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_REPO_URI/$IMAGE_REPO_NAME:$IMAGE_TAG  
   post_build:
     commands:
-      - ls
+       post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push $IMAGE_REPO_URI/$IMAGE_REPO_NAME:$IMAGE_TAG
