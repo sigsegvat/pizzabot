@@ -41,10 +41,21 @@ class Pizzabot {
           .when((msg) => msg.text === "orders")
             .consume(this.displayOrders)
           .end()
+          .when((msg) => msg.text.startsWith("pizza"))
+            .consume(this.pizzalist)
+          .end()
         .end();
     } catch (e) {
       LOG(e);
     }
+  }
+
+  pizzalist(message) { 
+
+    for (let pizza of pizzalist.findPizza.apply(null,message.text.split(" ").slice(1))) {
+      this.client.chat.postMessage(message.channel, pizza);
+    }
+    return true;
   }
 
   detectUser(text) {

@@ -98,6 +98,26 @@ describe('pizzabot', function() {
 
      });
 
+     it('should list pizzas', function() {
+         let answer = [];
+        let bot2 = new Pizzabot({
+        reactions: {
+          add: (...args) => {}
+        },
+        chat: {
+          postMessage: (...args) => {
+            answer.push(args);
+          }
+        },
+
+      });
+       bot2.onPizzaChannelMessage({ type: 'message', channel: 'test',
+       user: 'U0MHZ3ARM',
+       text: 'pizza Ei Zwiebel',
+       ts: '1482144986.000046' });
+       answer.should.containEql(['test', 'Mamamia (Tomaten, Käse, Schafkäse, Ei und Zwiebeln (AGP))']); 
+      });
+
 
   });
 

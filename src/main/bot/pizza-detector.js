@@ -53,7 +53,21 @@ let hasPizza = (sencentce, cb) => {
     }
 };
 
+let findPizza = (...args) => {
+    return pizzalist.filter((pizza) => {
+        for(let term of args){
+            if(pizza.ingredients.search(term)==-1){
+                return false;
+            }
+        }
+        return true;
+        
+    }).map(p => `${p.name} (${p.ingredients})`);
+}
+
 module.exports = {
     hasPizza : hasPizza,
-    detectPizza : detectPizza
+    detectPizza : detectPizza,
+    pizzalist : pizzalist,
+    findPizza : findPizza
 };

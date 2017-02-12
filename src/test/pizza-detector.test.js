@@ -26,4 +26,15 @@ describe('pizzalist', () => {
 
 
   });
+  
+  describe('#findPizza()', () => {
+    it("should know Tomaten", () => {
+      var pizze = pizzalist.findPizza("Zwiebel");
+      pizze.should.containEql("Mamamia (Tomaten, Käse, Schafkäse, Ei und Zwiebeln (AGP))");
+    });
+    it("should know Tomaten", () => {
+      var pizze = pizzalist.findPizza("Käse", "Ei");
+      pizze.should.containEql("Mamamia (Tomaten, Käse, Schafkäse, Ei und Zwiebeln (AGP))");
+    });
+  });
 });
