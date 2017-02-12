@@ -19,3 +19,4 @@ rtm.on(slack.RTM_EVENTS.MESSAGE, (msg) => {
 });
 
 rtm.start();
+console.log("started slackbot");
