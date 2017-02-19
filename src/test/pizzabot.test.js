@@ -113,9 +113,9 @@ describe('pizzabot', function() {
       });
        bot2.onPizzaChannelMessage({ type: 'message', channel: 'test',
        user: 'U0MHZ3ARM',
-       text: 'pizza Ei Zwiebel',
+       text: 'pizza Ei Zwiebeln',
        ts: '1482144986.000046' });
-       answer.should.containEql(['test', 'Mamamia (Tomaten, Käse, Schafkäse, Ei und Zwiebeln (AGP))']); 
+       answer.should.containEql(['test', 'Mamamia (Tomaten,Käse,Schafkäse,Ei,Zwiebeln)']); 
       });
 
 

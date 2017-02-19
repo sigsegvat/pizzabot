@@ -1,33 +1,33 @@
  let pizzalist = [
-{ name:"Margherita", regex:"Mar?gh?[e|a]rita", ingredients: "Tomaten und Käse (AG)"},
-{ name:"Siciliana", regex:"Siciliana", ingredients: "Tomaten, Käse, Oliven, Kapern und Sardellen (AGDP)"},
-{ name:"Cardinale", regex:"Cardinale", ingredients: "Tomaten, Käse und Schinken (AGP)"},
-{ name:"Salami", regex:"Salami", ingredients: "Tomaten, Käse und Salami (AGP)"},
-{ name:"Al Funghi", regex:"(Al )?Funghi", ingredients: "Tomaten, Käse und Champignons (AGP)"},
-{ name:"Tritato Di Carne", regex:"Tritato (Di )?Carne", ingredients: "Tomaten, Käse und Fleischsauce (AGPC)"},
-{ name:"Al Tonno", regex:"(Al )?Tonno", ingredients: "Tomaten, Käse, Thunfisch und Zwiebeln (AGPD)"},
-{ name:"Toscana", regex:"Toscana", ingredients: "Tomaten, Käse, Schinken und Champignons (AGP)"},
-{ name:"Cippola", regex:"Cippola", ingredients: "Tomaten, Käse und Zwiebeln (AGP)"},
-{ name:"Hawai", regex:"Hawai", ingredients: "Tomaten, Käse, Schinken und Ananas (AGPH)"},
-{ name:"Romana", regex:"Romana", ingredients: "Tomaten, Käse und Sardellen (AGDP)"},
-{ name:"Carciofini", regex:"Carciofini", ingredients: "Tomaten, Käse und Artischocken (AGP)"},
-{ name:"Primavera", regex:"Primavera", ingredients: "Tomaten, Käse, Broccoli, Mais, Pfefferoni und Zwiebeln (AGPL)"},
-{ name:"Speziale", regex:"Spe[zc]iale", ingredients: "Tomaten, Käse, Mozzarella, Prosciutto und Rucola (AGPL)"},
-{ name:"Casalinga", regex:"Casalinga", ingredients: "Tomaten, Käse, Schinken, Champignons, Artischocken und Spiegelei (AGP)"},
-{ name:"Quattro Stagioni", regex:"Quattro Stagioni", ingredients: "Tomaten, Käse, Champignons, Schinken und Artischocken (AGP)"},
-{ name:"Calzone", regex:"Calzone", ingredients: "Tomaten, Käse, Schinken, Champignons und Artischocken (AGPL)"},
-{ name:"Fiaker", regex:"Fiaker", ingredients: "Tomaten, Käse, Speck, Pfefferoni und Spiegelei (AGP)"},
-{ name:"Mamamia", regex:"Mamm?a\ ?mia", ingredients: "Tomaten, Käse, Schafkäse, Ei und Zwiebeln (AGP)"},
-{ name:"Capricciosa", regex:"Cap+ricc?iosa", ingredients: "Tomaten, Käse, Schinken, Champignons, Artischocken, Oliven und Sardellen (AGDP)"},
-{ name:"Diavolo", regex:"Dia[v|b]olo", ingredients: "Tomaten, Käse, Schinken und Pfefferoni (AGPL)"},
-{ name:"Milano", regex:"Milano", ingredients: "Tomaten, Käse, Schinken, Speck, Salami und Pfefferoni (AGPL)"},
-{ name:"Quattro Formaggi", regex:"(Quatt?ro )?Formag?gi", ingredients: "Tomaten, Käse, Mozzarella, Gorgonzola und Schafkäse (AGP)"},
-{ name:"Provinciale", regex:"Provinciale", ingredients: "Tomaten, Käse, Speck, Schinken, Pfefferoni und Mais (AGPL)"},
-{ name:"Rusticana", regex:"Rusticana", ingredients: "Tomaten, Käse, Schinken und Oliven (ACPL)"},
-{ name:"Sanremo", regex:"Sanremo", ingredients: "Tomaten, Käse, Spinat, Schafkäse und Knoblauch (AGPL)"},
-{ name:"Fantasia", regex:"Fantasia", ingredients: "Tomaten, Käse, Schinken, Spinat, Schafkäse, Ei und Pfefferoni (AGDPL)"},
-{ name:"Verdure", regex:"Verdure", ingredients: "Tomaten, Käse, Champignons, Artischocken, Mais, Brokkoli und Pfefferoni (AGPL)"},
-{ name:"Al Frutti Di Mare", regex:"(Al )?Frutti (Di )?Mare", ingredients: "Tomaten, Käse, Muscheln, Schrimps, Calamari, Thunfisch und Knoblauch (AGPLRD)"}
+{ name:"Margherita", regex:"Mar?gh?[e|a]rita", ingredients: ["Tomaten" , "Käse" ], alergenes: "AG"},
+{ name:"Siciliana", regex:"Siciliana", ingredients: ["Tomaten", "Käse", "Oliven", "Kapern" , "Sardellen" ], alergenes: "AGDP"},
+{ name:"Cardinale", regex:"Cardinale", ingredients: ["Tomaten", "Käse" , "Schinken" ], alergenes: "AGP"},
+{ name:"Salami", regex:"Salami", ingredients: ["Tomaten", "Käse" , "Salami" ], alergenes: "AGP"},
+{ name:"Al Funghi", regex:"(Al )?Funghi", ingredients: ["Tomaten", "Käse" , "Champignons" ], alergenes: "AGP"},
+{ name:"Tritato Di Carne", regex:"Tritato (Di )?Carne", ingredients: ["Tomaten", "Käse" , "Fleischsauce" ], alergenes: "AGPC"},
+{ name:"Al Tonno", regex:"(Al )?Tonno", ingredients: ["Tomaten", "Käse", "Thunfisch" , "Zwiebeln" ], alergenes: "AGPD"},
+{ name:"Toscana", regex:"Toscana", ingredients: ["Tomaten", "Käse", "Schinken" , "Champignons" ], alergenes: "AGP"},
+{ name:"Cippola", regex:"Cippola", ingredients: ["Tomaten", "Käse" , "Zwiebeln" ], alergenes: "AGP"},
+{ name:"Hawai", regex:"Hawai", ingredients: ["Tomaten", "Käse", "Schinken" , "Ananas" ], alergenes: "AGPH"},
+{ name:"Romana", regex:"Romana", ingredients: ["Tomaten", "Käse" , "Sardellen" ], alergenes: "AGDP"},
+{ name:"Carciofini", regex:"Carciofini", ingredients: ["Tomaten", "Käse" , "Artischocken" ], alergenes: "AGP"},
+{ name:"Primavera", regex:"Primavera", ingredients: ["Tomaten", "Käse", "Broccoli", "Mais", "Pfefferoni" , "Zwiebeln" ], alergenes: "AGPL"},
+{ name:"Speziale", regex:"Spe[zc]iale", ingredients: ["Tomaten", "Käse", "Mozzarella", "Prosciutto" , "Rucola" ], alergenes: "AGPL"},
+{ name:"Casalinga", regex:"Casalinga", ingredients: ["Tomaten", "Käse", "Schinken", "Champignons", "Artischocken" , "Spiegelei" ], alergenes: "AGP"},
+{ name:"Quattro Stagioni", regex:"Quattro Stagioni", ingredients: ["Tomaten", "Käse", "Champignons", "Schinken" , "Artischocken" ], alergenes: "AGP"},
+{ name:"Calzone", regex:"Calzone", ingredients: ["Tomaten", "Käse", "Schinken", "Champignons" , "Artischocken" ], alergenes: "AGPL"},
+{ name:"Fiaker", regex:"Fiaker", ingredients: ["Tomaten", "Käse", "Speck", "Pfefferoni" , "Spiegelei" ], alergenes: "AGP"},
+{ name:"Mamamia", regex:"Mamm?a\ ?mia", ingredients: ["Tomaten", "Käse", "Schafkäse", "Ei" , "Zwiebeln" ], alergenes: "AGP"},
+{ name:"Capricciosa", regex:"Cap+ricc?iosa", ingredients: ["Tomaten", "Käse", "Schinken", "Champignons", "Artischocken", "Oliven" , "Sardellen" ], alergenes: "AGDP"},
+{ name:"Diavolo", regex:"Dia[v|b]olo", ingredients: ["Tomaten", "Käse", "Schinken" , "Pfefferoni" ], alergenes: "AGPL"},
+{ name:"Milano", regex:"Milano", ingredients: ["Tomaten", "Käse", "Schinken", "Speck", "Salami" , "Pfefferoni" ], alergenes: "AGPL"},
+{ name:"Quattro Formaggi", regex:"(Quatt?ro )?Formag?gi", ingredients: ["Tomaten", "Käse", "Mozzarella", "Gorgonzola" , "Schafkäse" ], alergenes: "AGP"},
+{ name:"Provinciale", regex:"Provinciale", ingredients: ["Tomaten", "Käse", "Speck", "Schinken", "Pfefferoni" , "Mais" ], alergenes: "AGPL"},
+{ name:"Rusticana", regex:"Rusticana", ingredients: ["Tomaten", "Käse", "Schinken" , "Oliven" ], alergenes: "ACPL"},
+{ name:"Sanremo", regex:"Sanremo", ingredients: ["Tomaten", "Käse", "Spinat", "Schafkäse" , "Knoblauch" ], alergenes: "AGPL"},
+{ name:"Fantasia", regex:"Fantasia", ingredients: ["Tomaten", "Käse", "Schinken", "Spinat", "Schafkäse", "Ei" , "Pfefferoni" ], alergenes: "AGDPL"},
+{ name:"Verdure", regex:"Verdure", ingredients: ["Tomaten", "Käse", "Champignons", "Artischocken", "Mais", "Brokkoli" , "Pfefferoni" ], alergenes: "AGPL"},
+{ name:"Al Frutti Di Mare", regex:"(Al )?Frutti (Di )?Mare", ingredients: ["Tomaten", "Käse", "Muscheln", "Schrimps", "Calamari", "Thunfisch" , "Knoblauch" ], alergenes: "AGPLRD"}
 ];
 
 let detectPizza = (text) => {
@@ -55,13 +55,15 @@ let hasPizza = (sencentce, cb) => {
 
 let findPizza = (...args) => {
     return pizzalist.filter((pizza) => {
-        for(let term of args){
-            if(pizza.ingredients.search(term)==-1){
-                return false;
+        let match = pizza.ingredients.filter((i) => {
+            for(term of args){
+                if(term === i){
+                    return true;
+                }
             }
-        }
-        return true;
-        
+            return false;
+        });
+        return match.length == args.length;
     }).map(p => `${p.name} (${p.ingredients})`);
 }
 

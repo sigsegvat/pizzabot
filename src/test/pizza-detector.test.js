@@ -28,13 +28,13 @@ describe('pizzalist', () => {
   });
   
   describe('#findPizza()', () => {
-    it("should know Tomaten", () => {
-      var pizze = pizzalist.findPizza("Zwiebel");
-      pizze.should.containEql("Mamamia (Tomaten, Käse, Schafkäse, Ei und Zwiebeln (AGP))");
+    it("should find Zwiebel und Ei", () => {
+      var pizze = pizzalist.findPizza("Zwiebeln", "Ei");
+      pizze.should.containEql("Mamamia (Tomaten,Käse,Schafkäse,Ei,Zwiebeln)");
     });
-    it("should know Tomaten", () => {
+    it("should know Käse Ei", () => {
       var pizze = pizzalist.findPizza("Käse", "Ei");
-      pizze.should.containEql("Mamamia (Tomaten, Käse, Schafkäse, Ei und Zwiebeln (AGP))");
+      pizze.should.containEql("Mamamia (Tomaten,Käse,Schafkäse,Ei,Zwiebeln)");
     });
   });
 });
