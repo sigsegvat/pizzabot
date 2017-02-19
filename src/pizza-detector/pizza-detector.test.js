@@ -1,5 +1,5 @@
 var should = require('should');
-var pizzalist = require("../main/bot/pizza-detector");
+var pizzalist = require("./pizza-detector");
 
 describe('pizzalist', () => {
   describe('#hasPizza()', () => {

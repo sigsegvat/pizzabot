@@ -1,10 +1,10 @@
 var should = require('should');
-var Pizzabot = require("../main/bot/pizzabot").Pizzabot;
-var pizzatest1 = require("./pizza.testdata.1");
-var pizzatest2 = require("./pizza.testdata.2");
-var pizzatest3 = require("./pizza.testdata.3");
-var pizzatest4 = require("./pizza.testdata.4");
-var pizzatest5 = require("./pizza.testdata.5");
+var Pizzabot = require("./pizzabot").Pizzabot;
+var pizzatest1 = require("../slack-testdata/pizza.testdata.1");
+var pizzatest2 = require("../slack-testdata/pizza.testdata.2");
+var pizzatest3 = require("../slack-testdata/pizza.testdata.3");
+var pizzatest4 = require("../slack-testdata/pizza.testdata.4");
+var pizzatest5 = require("../slack-testdata/pizza.testdata.5");
 
 describe('pizzabot', function() {
   describe('#onPizzaChannelMessage()', function() {

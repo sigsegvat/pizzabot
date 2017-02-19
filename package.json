@@ -4,15 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-
     "prestart": "npm build",
     "start": "node target/slackbot/index.js",
-
-    "test": "mocha src/test",
+    "test": "mocha --recursive ./src/**/*.test.js",
 
     "prebuild": "rm -rf target/  && mkdir -p target/slackbot",
     "build": "npm run webpack",
-
     "webpack": "webpack"
 
   },
@@ -25,6 +22,7 @@
   "devDependencies": {
     "mocha": "^3.2.0",
     "should": "^11.1.2",
-    "webpack": "^1.14.0"
+    "webpack": "^1.14.0",
+    "webpack-node-externals": "^1.5.4"
   }
 }

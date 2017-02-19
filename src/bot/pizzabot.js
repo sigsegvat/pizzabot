@@ -1,6 +1,6 @@
 "use strict";
-let pizzalist = require("./pizza-detector");
-let chain = require("./filter-chain").chain;
+let pizzalist = require("../pizza-detector/pizza-detector");
+let chain = require("../filter-chain/filter-chain").chain;
 
 const DUMMY_CLIENT = {
   chat: {

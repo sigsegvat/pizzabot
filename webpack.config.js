@@ -1,14 +1,10 @@
- var x =require("./package.json").dependencies;
-
- for(d in x){
-     x[d] = `commonjs ${d}`;
- }
+var nodeExternals = require('webpack-node-externals');
 
 module.exports = {
-  entry: './src/main/index.js',
+  entry: './src/index.js',
   target: 'node',
   output: {
     filename: 'target/slackbot/index.js'
   },
-  externals : x
+  externals: [nodeExternals()]
 }

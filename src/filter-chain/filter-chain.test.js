@@ -1,5 +1,5 @@
 "use strict";
-let chain = require("../main/bot/filter-chain.js").chain;
+let chain = require("./filter-chain.js").chain;
 let should = require('should');
 
 describe('filter-chain', function() {
