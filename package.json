@@ -6,12 +6,11 @@
   "scripts": {
     "prestart": "npm build",
     "start": "node target/slackbot/index.js",
-    "test": "mocha --recursive ./src/**/*.test.js",
-
+    "pretest" : "npm run build",
+    "test": "mocha target/slackbot/test.js ",
     "prebuild": "rm -rf target/  && mkdir -p target/slackbot",
     "build": "npm run webpack",
     "webpack": "webpack"
-
   },
   "author": "",
   "license": "ISC",
@@ -20,8 +19,10 @@
     "dotenv": "^2.0.0"
   },
   "devDependencies": {
+    "awesome-typescript-loader": "^3.1.2",
     "mocha": "^3.2.0",
     "should": "^11.1.2",
+    "typescript": "^2.2.1",
     "webpack": "^1.14.0",
     "webpack-node-externals": "^1.5.4"
   }
