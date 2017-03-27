@@ -50,11 +50,12 @@ class Pizzabot {
     }
   }
 
-  pizzalist(message) { 
-
+  pizzalist(message) {
+    let pizzaMessage = "";
     for (let pizza of pizzalist.findPizza.apply(null,message.text.split(" ").slice(1))) {
-      this.client.chat.postMessage(message.channel, pizza);
+        pizzaMessage += pizza + "\n"
     }
+    this.client.chat.postMessage(message.channel, pizzaMessage);
     return true;
   }
 
@@ -78,11 +79,11 @@ class Pizzabot {
  }
 
   noBotMessages(msg) {
-    
+
     if (msg.subtype === 'bot_message') {
       return false; //filter out
     } else if (msg.type === "message") {
-    
+
       return true;
     } else {
       return true;
