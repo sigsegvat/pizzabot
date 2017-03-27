@@ -91,10 +91,12 @@ class Pizzabot {
   }
 
   displayOrders(msg) {
+      let orderMessage = "";
       for (let [pizza,users] of this.orders) {
         let clients = [...users].map( user => `<@${user}>`).join(" ");
-        this.client.chat.postMessage(msg.channel, `${users.size}x ${pizza} (${clients})`);
+          orderMessage += `${users.size}x ${pizza} (${clients})\n`
       }
+      this.client.chat.postMessage(msg.channel, orderMessage);
   }
 
   addOrder(msg) {
