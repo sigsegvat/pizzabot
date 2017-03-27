@@ -115,7 +115,7 @@ describe('pizzabot', function() {
        user: 'U0MHZ3ARM',
        text: 'pizza Ei Zwiebel',
        ts: '1482144986.000046' });
-       answer.should.containEql(['test', 'Mamamia (Tomaten,Käse,Schafkäse,Ei,Zwiebel)']); 
+       answer.should.containEql(['test', 'Mamamia (Tomaten,Käse,Schafkäse,Ei,Zwiebel)\n']);
       });
 
 
