@@ -6,4 +6,4 @@ ADD webpack.config.js .
 ADD src/ ./src/
 RUN npm test
 RUN npm run build
-CMD node target/slackbot/index.js
+CMD node target/slackbot/main.js
