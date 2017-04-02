@@ -79,8 +79,9 @@ describe('pizzabot', function() {
       pizzatest4.reverse().forEach(i => bot2.onPizzaChannelMessage(i));
       bot2.onPizzaChannelMessage(msg);
 
-      answer.should.containEql(['test', '2x Provinciale (<@U06QLURC1> <@U07BCV4AE>)']);
-      answer.should.not.matchAny(([test, pizza]) => pizza.should.match(/Diavolo/));
+      answer[0][0].should.eql('test');
+      answer[0][1].should.containEql('2x Provinciale (<@U06QLURC1> <@U07BCV4AE>)');
+      answer[0][1].should.not.containEql('Diavolo');
     });
 
      it('should detect users', function() {
@@ -115,7 +116,7 @@ describe('pizzabot', function() {
        user: 'U0MHZ3ARM',
        text: 'pizza Ei Zwiebel',
        ts: '1482144986.000046' });
-       answer.should.containEql(['test', 'Mamamia (Tomaten,Käse,Schafkäse,Ei,Zwiebel)']); 
+       answer.should.containEql(['test', 'Mamamia (Tomaten,Käse,Schafkäse,Ei,Zwiebel)\n']);
       });
 
 
