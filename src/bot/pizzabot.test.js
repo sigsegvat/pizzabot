@@ -119,6 +119,10 @@ describe('pizzabot', function() {
        answer.should.containEql(['test', 'Mamamia (Tomaten,Käse,Schafkäse,Ei,Zwiebel)\n']);
       });
 
+      it('should list pizzas', function() {
+         bot.displayOrders({ type: 'message', channel: 'test'});
+      });
+
 
   });
 

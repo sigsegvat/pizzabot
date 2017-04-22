@@ -20,6 +20,19 @@ class Pizzabot {
   constructor(client = DUMMY_CLIENT) {
     this.client = client;
     this.orders = new Map();
+    this.date = new Date();
+  }
+
+  getCurrentDate(){
+     return `${this.date.getDate()}/${this.date.getMonth()+1}`;
+  }
+
+  checkDate() {
+      let d = new Date();
+      if(this.date.getDate() !== d.getDate() || this.date.getMonth() !== d.getMonth()){
+          this.orders = new Map();
+          this.date =d;
+      }
   }
 
   onPizzaChannelMessage(msg) {
@@ -60,7 +73,7 @@ class Pizzabot {
   }
 
   detectUser(text) {
-    return text.search("<@([A-Z0-9]+)(|[^>]*)?>") != -1;
+    return text.search("<@([A-Z0-9]+)(|[^>]*)?>") !== -1;
   }
 
   addOrderFor(msg) {
@@ -91,7 +104,8 @@ class Pizzabot {
   }
 
   displayOrders(msg) {
-      let orderMessage = "";
+      let d = this.getCurrentDate();
+      let orderMessage = `orders for ${d} :\n`;
       for (let [pizza,users] of this.orders) {
         let clients = [...users].map( user => `<@${user}>`).join(" ");
           orderMessage += `${users.size}x ${pizza} (${clients})\n`
