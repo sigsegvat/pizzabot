@@ -5,3 +5,4 @@ services:
     slackbot:
        mem: 256
        instances: 1
+       image: "$docker_image"

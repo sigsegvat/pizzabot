@@ -14,8 +14,8 @@ before_install:
 
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
-     curl -k -L https://files.sloppy.io/sloppy-`uname -s`-`uname -m` > sloppy
-     chmod +x sloppy
-     ./sloppy change -v docker_image:"$DOCKER_IMAGE:$TRAVIS_COMMIT" .sloppy.yml
-    fi
+  - curl -k -L https://files.sloppy.io/sloppy-`uname -s`-`uname -m` > sloppy
+  - chmod +x sloppy
+  - ./sloppy change -v docker_image:"$DOCKER_IMAGE:$TRAVIS_COMMIT" .sloppy.yml
+  - fi
 
