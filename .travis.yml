@@ -11,7 +11,7 @@ before_install:
   - docker build -t sigsegv/pizzabot:$TRAVIS_COMMIT .
 
 after_success:
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+  - if [ "$TRAVIS_BRANCH" == "sloppy" ]; then
     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
     docker push sigsegv/pizzabot:$TRAVIS_COMMIT;
     fi
