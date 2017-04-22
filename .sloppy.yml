@@ -1,0 +1,7 @@
+version: "v1"
+project: "pizzabot"
+services:
+  backend:
+    slackbot:
+       mem: 256
+       instances: 1

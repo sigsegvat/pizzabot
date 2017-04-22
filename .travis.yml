@@ -9,10 +9,13 @@ node_js:
 
 before_install:
   - docker build -t sigsegv/pizzabot:$TRAVIS_COMMIT .
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+  - docker push sigsegv/pizzabot:$TRAVIS_COMMIT;
 
 after_success:
-  - if [ "$TRAVIS_BRANCH" == "sloppy" ]; then
-    docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-    docker push sigsegv/pizzabot:$TRAVIS_COMMIT;
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+     curl -k -L https://files.sloppy.io/sloppy-`uname -s`-`uname -m` > sloppy
+     chmod +x sloppy
+     ./sloppy change -v docker_image:"$DOCKER_IMAGE:$TRAVIS_COMMIT" -v domain:"$DOMAIN" .sloppy.yml
     fi
 
