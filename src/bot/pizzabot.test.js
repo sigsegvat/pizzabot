@@ -119,7 +119,8 @@ describe('pizzabot', function() {
        answer.should.containEql(['test', 'Mamamia (Tomaten,Käse,Schafkäse,Ei,Zwiebel)\n']);
       });
 
-      it('should list pizzas', function() {
+      it('should display orders', function() {
+         let bot = new Pizzabot();
          bot.displayOrders({ type: 'message', channel: 'test'});
       });
 

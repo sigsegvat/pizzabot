@@ -13,7 +13,7 @@ const DUMMY_CLIENT = {
 
 };
 
-let LOG =  () => 1; console.log;
+let LOG =  () =>  console.log;
 
 class Pizzabot {
 
@@ -38,6 +38,7 @@ class Pizzabot {
   onPizzaChannelMessage(msg) {
 
     try {
+      this.checkDate();
       chain(msg,this)
         .when(this.noBotMessages)
           .when(this.isAdmin)
