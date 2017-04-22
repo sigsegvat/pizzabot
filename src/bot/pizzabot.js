@@ -1,155 +1,149 @@
 "use strict";
 let pizzalist = require("../pizza-detector/pizza-detector");
-let chain = require("../filter-chain/filter-chain").chain;
 
-const DUMMY_CLIENT = {
-  chat: {
-    postMessage: console.log
-  },
-  reactions: {
-    _items: [],
-    add: (...args) => {}
-  }
-
-};
-
-let LOG =  () =>  console.log;
+let LOG = () => console.log;
 
 class Pizzabot {
 
-  constructor(client = DUMMY_CLIENT) {
-    this.client = client;
-    this.orders = new Map();
-    this.date = new Date();
-  }
-
-  getCurrentDate(){
-     return `${this.date.getDate()}/${this.date.getMonth()+1}`;
-  }
-
-  checkDate() {
-      let d = new Date();
-      if(this.date.getDate() !== d.getDate() || this.date.getMonth() !== d.getMonth()){
-          this.orders = new Map();
-          this.date =d;
-      }
-  }
-
-  onPizzaChannelMessage(msg) {
-
-    try {
-      this.checkDate();
-      chain(msg,this)
-        .when(this.noBotMessages)
-          .when(this.isAdmin)
-            .when((msg) => msg.text === "clear")
-              .consume(() => this.orders = new Map())
-            .end()
-            .when((msg) =>  pizzalist.detectPizza(msg.text) && this.detectUser(msg.text))
-              .consume((m) => this.addOrderFor(msg))
-            .end()
-          .end()
-          .when((msg) => pizzalist.detectPizza(msg.text))
-            .consume(this.addOrder)
-          .end()
-          .when((msg) => msg.text === "orders")
-            .consume(this.displayOrders)
-          .end()
-          .when((msg) => msg.text.startsWith("pizza"))
-            .consume(this.pizzalist)
-          .end()
-        .end();
-    } catch (e) {
-      LOG(e);
+    constructor(client) {
+        this.client = client;
+        this.orders = new Map();
+        this.date = new Date();
+        this.adminUser = "U04F3P9QJ";
+        this.pizzaMaster = this.adminUser;
     }
-  }
 
-  pizzalist(message) {
-    let pizzaMessage = "";
-    for (let pizza of pizzalist.findPizza.apply(null,message.text.split(" ").slice(1))) {
-        pizzaMessage += pizza + "\n"
+    getCurrentDate() {
+        return `${this.date.getDate()}/${this.date.getMonth() + 1}`;
     }
-    this.client.chat.postMessage(message.channel, pizzaMessage);
-    return true;
-  }
 
-  detectUser(text) {
-    return text.search("<@([A-Z0-9]+)(|[^>]*)?>") !== -1;
-  }
-
-  addOrderFor(msg) {
-    let user = msg.text.match("<@([A-Z0-9]+)(|[^>]*)?>")[1];
-    console.log(user);
-    if (pizzalist.hasPizza(msg.text, order => this.processOrderFor(order, msg, user))) {
-      LOG(`processedOrder`);
-      return true;
-    } else {
-      return false;
-    }
-  }
-
- isAdmin(msg) {
-   return msg.user === "U04F3P9QJ";
- }
-
-  noBotMessages(msg) {
-
-    if (msg.subtype === 'bot_message') {
-      return false; //filter out
-    } else if (msg.type === "message") {
-
-      return true;
-    } else {
-      return true;
-    }
-  }
-
-  displayOrders(msg) {
-      let d = this.getCurrentDate();
-      let orderMessage = `orders for ${d} :\n`;
-      for (let [pizza,users] of this.orders) {
-        let clients = [...users].map( user => `<@${user}>`).join(" ");
-          orderMessage += `${users.size}x ${pizza} (${clients})\n`
-      }
-      this.client.chat.postMessage(msg.channel, orderMessage);
-  }
-
-  addOrder(msg) {
-    if (pizzalist.hasPizza(msg.text, order => this.processOrderFor(order, msg, msg.user))) {
-      LOG(`processedOrder`);
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  processOrderFor(order, msg, user) {
-    this.removeDuplicateUserInOrders(user);
-    if (!this.orders.has(order.name)) {
-      this.orders.set(order.name, new Set([user]));
-    } else {
-      this.orders.get(order.name).add(user);;
-    }
-    this.client.reactions.add("pizza", {
-      channel: msg.channel,
-      timestamp: msg.ts
-    });
-  }
-
-  removeDuplicateUserInOrders(user) {
-    for(let [pizza,users] of this.orders) {
-      if(users.has(user)) {
-        users.delete(user);
-        if(users.size == 0) {
-          this.orders.delete(pizza);
+    checkDate() {
+        let d = new Date();
+        if (this.date.getDate() !== d.getDate() || this.date.getMonth() !== d.getMonth()) {
+            this.orders = new Map();
+            this.date = d;
         }
-      }
     }
-  }
+
+    onPizzaChannelMessage(msg) {
+
+        try {
+            this.checkDate();
+
+            if (this.client.isBotMessage(msg)) {
+                return null;
+            }
+
+            if (this.isAdmin(msg)) {
+                if(msg.text.toLowerCase().startsWith("pizzamaster") && Pizzabot.detectUser(msg.text)){
+                    this.pizzaMaster = Pizzabot.getUser(msg.text);
+                }
+            }
+
+            if (this.isAdmin(msg) || this.isPizzaMaster(msg)) {
+                if (msg.text === "clear") {
+                    this.orders = new Map();
+                }
+                if (pizzalist.detectPizza(msg.text) && Pizzabot.detectUser(msg.text)) {
+                    this.addOrderFor(msg);
+                }
+            }
+
+            if (pizzalist.detectPizza(msg.text)) {
+                this.addOrder(msg);
+            }
+
+            if (msg.text === "orders") {
+                this.displayOrders(msg);
+            }
+
+            if (msg.text.startsWith("pizza")) {
+                this.pizzalist(msg);
+            }
+
+        } catch (e) {
+            LOG(e);
+        }
+    }
+
+    pizzalist(message) {
+        let pizzaMessage = "";
+        for (let pizza of pizzalist.findPizza.apply(null, message.text.split(" ").slice(1))) {
+            pizzaMessage += pizza + "\n"
+        }
+        this.client.replyMessageToChannel(pizzaMessage, message);
+        return true;
+    }
+
+    static detectUser(text) {
+        return text.search("<@([A-Z0-9]+)(|[^>]*)?>") !== -1;
+    }
+
+    static getUser(text) {
+       return text.match("<@([A-Z0-9]+)(|[^>]*)?>")[1]
+    }
+
+    addOrderFor(msg) {
+        let user = Pizzabot.getUser(msg.text);
+        let foundPizza = pizzalist.hasPizza(msg.text);
+        if (foundPizza) {
+            LOG(`processeing order ${foundPizza}`);
+            this.processOrderFor(foundPizza, msg, user)
+        }
+    }
+
+    isAdmin(msg) {
+        return msg.user === this.adminUser;
+    }
+
+    isPizzaMaster(msg) {
+        return msg.user === this.pizzaMaster;
+    }
+
+    displayOrders(msg) {
+        let d = this.getCurrentDate();
+        let orderMessage = `orders for ${d}, pizzamaster ${this.pizzaMaster} :\n`;
+        for (let [pizza, users] of this.orders) {
+            let clients = [...users].map(user => `<@${user}>`).join(" ");
+            orderMessage += `${users.size}x ${pizza} (${clients})\n`
+        }
+        this.client.replyMessageToChannel(orderMessage, msg);
+    }
+
+    addOrder(msg) {
+        let foundPizza = pizzalist.hasPizza(msg.text);
+        if (foundPizza) {
+            LOG(`processing order ${foundPizza}`);
+            this.processOrderFor(foundPizza, msg, msg.user)
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    processOrderFor(order, msg, user) {
+        this.removeDuplicateUserInOrders(user);
+        if (!this.orders.has(order.name)) {
+            this.orders.set(order.name, new Set([user]));
+        } else {
+            this.orders.get(order.name).add(user);
+        }
+        this.client.addReactionToMessage("pizza", msg);
+    }
+
+    removeDuplicateUserInOrders(user) {
+        for (let [pizza, users] of this.orders) {
+            if (users.has(user)) {
+                users.delete(user);
+                if (users.size == 0) {
+                    this.orders.delete(pizza);
+                }
+            }
+        }
+    }
 
 
-
-
-};
+}
+;
 module.exports = {};
 module.exports.Pizzabot = Pizzabot;
