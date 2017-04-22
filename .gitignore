@@ -1,5 +1,6 @@
 node_modules/
 .vscode/
+.idea/
 target/
 .DS_Store
 *.pem
