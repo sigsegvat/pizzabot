@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prestart": "npm build",
-    "start": "node target/slackbot/index.js",
+    "start": "node target/slackbot/main.js",
     "pretest" : "npm run build",
     "test": "mocha target/slackbot/test.js ",
     "prebuild": "rm -rf target/  && mkdir -p target/slackbot",

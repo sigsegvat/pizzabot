@@ -102,7 +102,7 @@ class Pizzabot {
 
     displayOrders(msg) {
         let d = this.getCurrentDate();
-        let orderMessage = `orders for ${d}, pizzamaster ${this.pizzaMaster} :\n`;
+        let orderMessage = `orders for ${d}, pizzamaster <@${this.pizzaMaster}> :\n`;
         for (let [pizza, users] of this.orders) {
             let clients = [...users].map(user => `<@${user}>`).join(" ");
             orderMessage += `${users.size}x ${pizza} (${clients})\n`
@@ -135,7 +135,7 @@ class Pizzabot {
         for (let [pizza, users] of this.orders) {
             if (users.has(user)) {
                 users.delete(user);
-                if (users.size == 0) {
+                if (users.size === 0) {
                     this.orders.delete(pizza);
                 }
             }
