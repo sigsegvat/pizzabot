@@ -13,9 +13,7 @@ before_install:
   - docker push sigsegv/pizzabot:$TRAVIS_COMMIT;
 
 after_success:
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then
   - curl -k -L https://files.sloppy.io/sloppy-`uname -s`-`uname -m` > sloppy
   - chmod +x sloppy
-  - ./sloppy change -v docker_image:"$DOCKER_IMAGE:$TRAVIS_COMMIT" .sloppy.yml
-  - fi
+  - if [ "$TRAVIS_BRANCH" == "master" ];then ./sloppy change -v docker_image:"sigsegv/pizzabot:$TRAVIS_COMMIT" .sloppy.yml; fi
 
