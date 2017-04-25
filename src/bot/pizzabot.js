@@ -34,18 +34,19 @@ class Pizzabot {
                 return null;
             }
 
-            if (this.isAdmin(msg)) {
-                if(msg.text.toLowerCase().startsWith("pizzamaster") && Pizzabot.detectUser(msg.text)){
-                    this.pizzaMaster = Pizzabot.getUser(msg.text);
-                }
-            }
-
             if (this.isAdmin(msg) || this.isPizzaMaster(msg)) {
                 if (msg.text === "clear") {
                     this.orders = new Map();
                 }
                 if (pizzalist.detectPizza(msg.text) && Pizzabot.detectUser(msg.text)) {
                     this.addOrderFor(msg);
+                    return;
+                }
+            }
+
+            if (this.isAdmin(msg)) {
+                if(msg.text.toLowerCase().startsWith("pizzamaster") && Pizzabot.detectUser(msg.text)){
+                    this.pizzaMaster = Pizzabot.getUser(msg.text);
                 }
             }
 

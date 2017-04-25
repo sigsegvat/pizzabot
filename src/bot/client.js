@@ -29,7 +29,7 @@ class Client {
     }
 
     replyMessageToChannel(text, message) {
-        return this.slackClient.chat.postMessage(message.channel, text);
+        return this.slackClient.chat.postMessage(message.channel, text, { thread_ts: message.ts});
     }
 
     addReactionToMessage(reaction, message) {
