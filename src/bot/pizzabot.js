@@ -35,8 +35,9 @@ class Pizzabot {
             }
 
             if (this.isAdmin(msg) || this.isPizzaMaster(msg)) {
-                if (msg.text === "clear") {
-                    this.orders = new Map();
+                if (msg.text.toLowerCase().startsWith("clear") && Pizzabot.detectUser(msg.text)) {
+                    let user = Pizzabot.getUser(msg.text);
+                    this.removeUserInOrders(user);
                 }
                 if (pizzalist.detectPizza(msg.text) && Pizzabot.detectUser(msg.text)) {
                     this.addOrderFor(msg);
@@ -45,7 +46,7 @@ class Pizzabot {
             }
 
             if (this.isAdmin(msg)) {
-                if(msg.text.toLowerCase().startsWith("pizzamaster") && Pizzabot.detectUser(msg.text)){
+                if (msg.text.toLowerCase().startsWith("pizzamaster") && Pizzabot.detectUser(msg.text)) {
                     this.pizzaMaster = Pizzabot.getUser(msg.text);
                 }
             }
@@ -81,7 +82,7 @@ class Pizzabot {
     }
 
     static getUser(text) {
-       return text.match("<@([A-Z0-9]+)(|[^>]*)?>")[1]
+        return text.match("<@([A-Z0-9]+)(|[^>]*)?>")[1]
     }
 
     addOrderFor(msg) {
@@ -123,7 +124,7 @@ class Pizzabot {
     }
 
     processOrderFor(order, msg, user) {
-        this.removeDuplicateUserInOrders(user);
+        this.removeUserInOrders(user);
         if (!this.orders.has(order.name)) {
             this.orders.set(order.name, new Set([user]));
         } else {
@@ -132,7 +133,7 @@ class Pizzabot {
         this.client.addReactionToMessage("pizza", msg);
     }
 
-    removeDuplicateUserInOrders(user) {
+    removeUserInOrders(user) {
         for (let [pizza, users] of this.orders) {
             if (users.has(user)) {
                 users.delete(user);

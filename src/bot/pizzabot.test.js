@@ -37,8 +37,8 @@ describe('pizzabot', function () {
 
         it('should clear orders', function () {
             pizzatest2.reverse().forEach(i => bot.onPizzaChannelMessage(i));
-            bot.onPizzaChannelMessage({text: "clear", user: "U04F3P9QJ"});
-            bot.orders.should.be.empty();
+            bot.onPizzaChannelMessage({text: "clear <@U06P2GUBX>", user: "U04F3P9QJ"});
+            should(bot.orders.get("Diavolo")).be.undefined();
         });
 
         it('should filter messages from bots', function () {
