@@ -6,4 +6,4 @@ ADD webpack.config.js .
 ADD src/ ./src/
 RUN npm test
 RUN npm run build
-CMD node target/slackbot/main.js
+CMD node --optimize_for_size target/slackbot/main.js
