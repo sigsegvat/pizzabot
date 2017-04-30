@@ -2,25 +2,6 @@
  * hides implementation details of slack client
  */
 
-class DummyClient {
-
-    constructor() {
-        this.reactions = [];
-        this.messages = [];
-    }
-
-    replyMessageToChannel(text, message) {
-        this.messages.push(text);
-    }
-
-    addReactionToMessage(reaction, message) {
-        this.reactions.push(reaction);
-    }
-
-    isBotMessage(msg) {
-        return msg.subtype === 'bot_message';
-    }
-}
 
 class Client {
 
@@ -45,6 +26,27 @@ class Client {
 
 
 }
+
+class DummyClient {
+
+    constructor() {
+        this.reactions = [];
+        this.messages = [];
+    }
+
+    replyMessageToChannel(text, message) {
+        this.messages.push(text);
+    }
+
+    addReactionToMessage(reaction, message) {
+        this.reactions.push(reaction);
+    }
+
+    isBotMessage(msg) {
+        return msg.subtype === 'bot_message';
+    }
+}
+
 module.exports = {};
 module.exports.Client = Client;
 module.exports.DummyClient = DummyClient;

@@ -1,12 +1,12 @@
 "use strict";
 let pizzalist = require("../pizza-detector/pizza-detector");
 
-let LOG = () => console.log;
 
 class Pizzabot {
 
-    constructor(client) {
+    constructor(client, orderDb) {
         this.client = client;
+        this.orderDb = orderDb;
         this.orders = new Map();
         this.date = new Date();
         this.adminUser = "U04F3P9QJ";
@@ -14,7 +14,7 @@ class Pizzabot {
     }
 
     getCurrentDate() {
-        return `${this.date.getDate()}/${this.date.getMonth() + 1}`;
+        return `${this.date.getFullYear()}-${this.date.getMonth() + 1}-${this.date.getDate()}`;
     }
 
     checkDate() {
@@ -43,6 +43,17 @@ class Pizzabot {
                     this.addOrderFor(msg);
                     return;
                 }
+                if (msg.text === "orders") {
+                    this.displayOrders(msg);
+                    let data = [...this.orders].map(item => {
+                        return {
+                            users: [...item[1]],
+                            pizza: item[0]
+                        }
+                    });
+                    this.orderDb.saveOrder(this.getCurrentDate(),data);
+                    return;
+                }
             }
 
             if (this.isAdmin(msg)) {
@@ -64,7 +75,7 @@ class Pizzabot {
             }
 
         } catch (e) {
-            LOG(e);
+            console.log(e);
         }
     }
 
@@ -89,7 +100,6 @@ class Pizzabot {
         let user = Pizzabot.getUser(msg.text);
         let foundPizza = pizzalist.hasPizza(msg.text);
         if (foundPizza) {
-            LOG(`processeing order ${foundPizza}`);
             this.processOrderFor(foundPizza, msg, user)
         }
     }
@@ -115,7 +125,6 @@ class Pizzabot {
     addOrder(msg) {
         let foundPizza = pizzalist.hasPizza(msg.text);
         if (foundPizza) {
-            LOG(`processing order ${foundPizza}`);
             this.processOrderFor(foundPizza, msg, msg.user)
             return true;
         } else {

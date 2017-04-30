@@ -1,6 +1,7 @@
 let should = require('should');
 let Pizzabot = require("./pizzabot").Pizzabot;
 let Client = require("./client").DummyClient;
+let OrderDb = require("./order-db").DummyDb;
 
 let pizzatest1 = require("../slack-testdata/pizza.testdata.1");
 let pizzatest2 = require("../slack-testdata/pizza.testdata.2");
@@ -11,9 +12,11 @@ let pizzatest5 = require("../slack-testdata/pizza.testdata.5");
 describe('pizzabot', function () {
     describe('#onPizzaChannelMessage()', function () {
 
-        let bot = new Pizzabot(new Client());
+
 
         it('should return correct no of orders', function () {
+            let bot = new Pizzabot(new Client());
+
             pizzatest1.reverse().forEach(i => bot.onPizzaChannelMessage(i));
 
             bot.orders.size.should.be.equal(3);
@@ -23,6 +26,8 @@ describe('pizzabot', function () {
         });
 
         it('should return correct multiorders', function () {
+            let bot = new Pizzabot(new Client());
+
             pizzatest2.reverse().forEach(i => bot.onPizzaChannelMessage(i));
 
             bot.orders.should.have.key("Diavolo");
@@ -36,6 +41,8 @@ describe('pizzabot', function () {
 
 
         it('should clear orders', function () {
+            let bot = new Pizzabot(new Client());
+
             pizzatest2.reverse().forEach(i => bot.onPizzaChannelMessage(i));
             bot.onPizzaChannelMessage({text: "clear <@U06P2GUBX>", user: "U04F3P9QJ"});
             should(bot.orders.get("Diavolo")).be.undefined();
@@ -49,34 +56,37 @@ describe('pizzabot', function () {
                 text: 'milano bitte',
                 ts: '1482141802.000044'
             };
-            let bot = new Pizzabot({
-                reactions: {
-                    add: function () {
-                        throw new Error('reactions.add called')
-                    }
-                }
-            });
+            let client = new Client();
+            client.addReactionToMessage = () => {
+                throw new Error('reactions.add called');
+            };
+
+            let bot = new Pizzabot(client);
             bot.onPizzaChannelMessage(msg);
 
         });
 
         it('should answer order lists', function () {
+
+            let client = new Client();
+            let orderDb = new OrderDb();
+            let bot = new Pizzabot(client,orderDb);
             let msg = {
                 type: 'message',
-                user: 'U06MSLT7H',
+                user: bot.adminUser,
                 text: 'orders',
                 channel: 'test',
                 ts: '1481538257.000036',
             };
-            let answer = [];
-            let client = new Client();
-            let bot2 = new Pizzabot(client);
 
-            pizzatest4.reverse().forEach(i => bot2.onPizzaChannelMessage(i));
-            bot2.onPizzaChannelMessage(msg);
+            pizzatest4.reverse().forEach(i => bot.onPizzaChannelMessage(i));
+            bot.onPizzaChannelMessage(msg);
 
             client.messages[0].split("\n").should.containEql("2x Provinciale (<@U06QLURC1> <@U07BCV4AE>)");
             client.reactions[0].should.not.containEql('Diavolo');
+
+            orderDb.calls.should.have.size(1);
+
         });
 
         it('should detect users', function () {
@@ -87,6 +97,7 @@ describe('pizzabot', function () {
 
 
         it('add orders for others', function () {
+            let bot = new Pizzabot(new Client());
             pizzatest5.reverse().forEach(i => bot.onPizzaChannelMessage(i));
             bot.orders.should.have.key("Provinciale");
             bot.orders.should.have.key("Toscana");
@@ -96,8 +107,8 @@ describe('pizzabot', function () {
 
         it('should list pizzas', function () {
             let client = new Client();
-            let bot2 = new Pizzabot(client);
-            bot2.onPizzaChannelMessage({
+            let bot = new Pizzabot(client);
+            bot.onPizzaChannelMessage({
                 type: 'message', channel: 'test',
                 user: 'U0MHZ3ARM',
                 text: 'pizza Ei Zwiebel',
@@ -106,10 +117,6 @@ describe('pizzabot', function () {
             client.messages.should.containEql('Mamamia (Tomaten,Käse,Schafkäse,Ei,Zwiebel)\n');
         });
 
-        it('should display orders', function () {
-            let bot = new Pizzabot(new Client());
-            bot.displayOrders({type: 'message', channel: 'test'});
-        });
 
 
     });
