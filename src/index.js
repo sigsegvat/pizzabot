@@ -8,7 +8,7 @@ let AWS = require("aws-sdk");
 AWS.config.update({
     region: "eu-west-1",
 });
-require('dotenv').config();
+require('dotenv').config({silent: true});
 
 let bot_token = process.env.slack_bot_token;
 

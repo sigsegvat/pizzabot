@@ -5,6 +5,7 @@ let detectPizza = (text) => {
 };
 
 let hasPizza = (sencentce) => {
+    if(!sencentce) return false;
     return pizzalist.find(p => {
         return sencentce.toLowerCase().search(p.regex.toLowerCase()) !== -1;
     });
